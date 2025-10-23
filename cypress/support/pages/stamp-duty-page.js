@@ -1,21 +1,22 @@
 // Page Object Model for Motor Vehicle Stamp Duty Page
 
-export class StampDutyPage {
+class StampDutyPage {
   
   // Selectors
   selectors = {
     pageContainer: 'body',
     pageTitle: 'h1, .page-title, [data-testid="page-title"]',
-    checkOnlineButton: '[data-testid="check-online-button"], .btn-primary, button:contains("Check online")',
+    checkOnlineButton: '.cta__action > .button, [data-testid="check-online-button"], .btn-primary, button:contains("Check online")',
     introductionSection: '.introduction, .intro, [data-testid="introduction"]',
     stampDutyInfo: '.stamp-duty-info, .information, [data-testid="stamp-duty-info"]',
     calculatorForm: 'form, .calculator-form, [data-testid="calculator-form"]',
-    vehicleValueInput: 'input[name="vehicleValue"], input[type="number"], input[placeholder*="value"]',
+    vehicleValueInput: '#purchasePrice, input[name="vehicleValue"], input[type="number"], input[placeholder*="value"]',
     calculateButton: 'button:contains("Calculate"), input[type="submit"], .calculate-button',
     resultSection: '.result, .calculation-result, [data-testid="result"]',
     errorMessage: '.error, .validation-error, .alert-danger, [role="alert"]',
     moreInfoSection: '.more-information, .additional-info, [data-testid="more-info"]',
-    linksSection: '.links, .related-links, [data-testid="links"]'
+    linksSection: '.links, .related-links, [data-testid="links"]',
+    popupModal: '.modal, .popup, .dialog, [role="dialog"], .modal-dialog'
   }
 
   // Actions
@@ -82,6 +83,22 @@ export class StampDutyPage {
       .should('be.visible')
   }
 
+  verifyPopupModal() {
+    cy.get(this.selectors.popupModal)
+      .should('be.visible')
+  }
+
+  verifyPopupContents(vehicleValue, containsDollarSign = true) {
+    cy.get(this.selectors.popupModal)
+      .should('be.visible')
+      .and('contain.text', vehicleValue)
+    
+    if (containsDollarSign) {
+      cy.get(this.selectors.popupModal)
+        .and('contain.text', '$')
+    }
+  }
+
   verifyErrorMessage() {
     cy.get(this.selectors.errorMessage)
       .should('be.visible')
@@ -132,3 +149,5 @@ export class StampDutyPage {
       .should('be.focused')
   }
 }
+
+module.exports = { StampDutyPage }

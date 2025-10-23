@@ -1,6 +1,6 @@
 // Page Object Model for NSW Service Homepage
 
-export class NSWServicePage {
+class NSWServicePage {
   
   // Selectors
   selectors = {
@@ -61,3 +61,5 @@ export class NSWServicePage {
     cy.title().should('contain', expectedTitle)
   }
 }
+
+module.exports = { NSWServicePage }

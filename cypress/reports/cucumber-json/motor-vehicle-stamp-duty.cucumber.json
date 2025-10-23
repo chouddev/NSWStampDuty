@@ -9,10 +9,6 @@
       {
         "name": "@motor-vehicle-stamp-duty",
         "line": 1
-      },
-      {
-        "name": "@smoke",
-        "line": 1
       }
     ],
     "uri": "motor-vehicle-stamp-duty.feature",
@@ -25,10 +21,6 @@
         "tags": [
           {
             "name": "@motor-vehicle-stamp-duty",
-            "line": 1
-          },
-          {
-            "name": "@smoke",
             "line": 1
           },
           {
@@ -48,8 +40,7 @@
             "line": 8,
             "name": "I am on the NSW Service website",
             "result": {
-              "status": "undefined",
-              "duration": 81000000
+              "status": "undefined"
             }
           },
           {
@@ -101,7 +92,7 @@
             "arguments": [],
             "keyword": "And ",
             "line": 17,
-            "name": "I enter a vehicle value of \"$30000\"",
+            "name": "I enter a vehicle value of \"$25,000\"",
             "result": {
               "status": "skipped"
             }

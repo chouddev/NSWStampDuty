@@ -32,18 +32,14 @@ module.exports = defineConfig({
     baseUrl: "https://www.service.nsw.gov.au",
     supportFile: "cypress/support/e2e.js",
     specPattern: [
-      "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}",
-      "cypress/e2e/**/*.feature"
+      "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}"
     ],
     excludeSpecPattern: [
       "cypress/e2e/**/node_modules/**",
       "cypress/e2e/**/coverage/**"
     ],
     setupNodeEvents(on, config) {
-      const cucumber = require('cypress-cucumber-preprocessor').default;
-      on('file:preprocessor', cucumber());
-      
-      // Custom tasks for BDD
+      // Custom tasks
       on('task', {
         log(message) {
           console.log(message);

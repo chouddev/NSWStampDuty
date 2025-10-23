@@ -11,9 +11,7 @@ usage() {
     echo "Usage: $0 [OPTION]"
     echo ""
     echo "Options:"
-    echo "  smoke       Run smoke tests only"
-    echo "  regression  Run regression tests only"
-    echo "  bdd         Run BDD tests only"
+    echo "  stamp-duty  Run motor vehicle stamp duty tests only"
     echo "  all         Run all tests"
     echo "  open        Open Cypress Test Runner GUI"
     echo "  chrome      Run tests in Chrome browser"
@@ -25,8 +23,7 @@ usage() {
     echo "  help        Show this help message"
     echo ""
     echo "Examples:"
-    echo "  $0 smoke"
-    echo "  $0 bdd"
+    echo "  $0 stamp-duty"
     echo "  $0 chrome"
     echo "  $0 open"
 }
@@ -47,22 +44,11 @@ clean_artifacts() {
     echo "✅ Test artifacts cleaned!"
 }
 
-# Function to run smoke tests
-run_smoke() {
-    echo "🔥 Running smoke tests..."
-    npx cypress run --spec "cypress/e2e/smoke-tests/**/*.cy.js"
-}
 
-# Function to run regression tests
-run_regression() {
-    echo "🔄 Running regression tests..."
-    npx cypress run --spec "cypress/e2e/regression-tests/**/*.cy.js"
-}
-
-# Function to run BDD tests
-run_bdd() {
-    echo "🥒 Running BDD tests..."
-    npx cypress run --spec "cypress/e2e/bdd-tests/**/*.feature"
+# Function to run stamp duty tests
+run_stamp_duty() {
+    echo "🚗 Running motor vehicle stamp duty tests..."
+    npx cypress run --spec "cypress/e2e/motor-vehicle-stamp-duty.cy.js"
 }
 
 # Function to run all tests
@@ -92,14 +78,8 @@ run_headed() {
 
 # Main script logic
 case "$1" in
-    smoke)
-        run_smoke
-        ;;
-    regression)
-        run_regression
-        ;;
-    bdd)
-        run_bdd
+    stamp-duty)
+        run_stamp_duty
         ;;
     all)
         run_all
