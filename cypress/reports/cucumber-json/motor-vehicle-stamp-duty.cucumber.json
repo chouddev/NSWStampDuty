@@ -1,0 +1,149 @@
+[
+  {
+    "description": "  As a NSW resident\n  I want to check motor vehicle stamp duty\n  So that I can calculate the cost when buying a vehicle",
+    "keyword": "Feature",
+    "name": "Motor Vehicle Stamp Duty Check",
+    "line": 2,
+    "id": "motor-vehicle-stamp-duty-check",
+    "tags": [
+      {
+        "name": "@motor-vehicle-stamp-duty",
+        "line": 1
+      },
+      {
+        "name": "@smoke",
+        "line": 1
+      }
+    ],
+    "uri": "motor-vehicle-stamp-duty.feature",
+    "elements": [
+      {
+        "id": "motor-vehicle-stamp-duty-check;complete-motor-vehicle-stamp-duty-calculation-flow",
+        "keyword": "Scenario",
+        "line": 12,
+        "name": "Complete Motor Vehicle Stamp Duty Calculation Flow",
+        "tags": [
+          {
+            "name": "@motor-vehicle-stamp-duty",
+            "line": 1
+          },
+          {
+            "name": "@smoke",
+            "line": 1
+          },
+          {
+            "name": "@check-online-button",
+            "line": 11
+          },
+          {
+            "name": "@critical",
+            "line": 11
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "I am on the NSW Service website",
+            "result": {
+              "status": "undefined",
+              "duration": 81000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "I navigate to the motor vehicle stamp duty page",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 13,
+            "name": "I click the \"Check online\" button",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 14,
+            "name": "I should be redirected to the stamp duty calculator page",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 15,
+            "name": "the calculator page should be fully loaded",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 16,
+            "name": "I select \"Yes\" for the vehicle question",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 17,
+            "name": "I enter a vehicle value of \"$30000\"",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 18,
+            "name": "I click the \"Calculate\" button",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 19,
+            "name": "I should see the stamp duty calculation result",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 20,
+            "name": "I should see a popup window with calculation details",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 21,
+            "name": "the popup should contain the vehicle value and stamp duty amount",
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
