@@ -48,19 +48,19 @@ pipeline {
                         npx mochawesome-merge "cypress/reports/.jsons/*.json" > cypress/reports/merged-report.json
                         
                         # Try to generate HTML report with marge, fallback to basic approach if it fails
-                        if npx marge cypress/reports/merged-report.json --reportDir cypress/reports --reportFilename merged-report.html then
+                        if npx marge cypress/reports/merged-report.json --reportDir cypress/reports --reportFilename merged-report.html; then
                             echo "HTML report generated successfully with marge!"
                         else
                             echo "Marge failed, using basic report generation..."
                             # Basic HTML report generation without marge
-                            echo "<html><body><h1>Test Report</h1><p>Reports available in JSON format</p></body></html>" > cypress/reports/mochawesome.html
+                            echo "<html><body><h1>Test Report</h1><p>Reports available in JSON format</p></body></html>" > cypress/reports/merged-report.html
                         fi
                         
                         echo "Reports generated successfully!"
                     else
                         echo "No report files found to merge"
                         # Create a basic HTML report even if no JSON files exist
-                        echo "<html><body><h1>Test Report</h1><p>No test results found</p></body></html>" > cypress/reports/mochawesome.html
+                        echo "<html><body><h1>Test Report</h1><p>No test results found</p></body></html>" > cypress/reports/merged-report.html
                     fi
                 '''
             }
