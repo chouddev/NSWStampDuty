@@ -25,9 +25,6 @@ module.exports = defineConfig({
     inlineAssets: true,
     saveAllAttempts: false
   },
-  env: {
-    TAGS: "not @ignore"
-  },
   retries: {
     runMode: 2,
     openMode: 0

@@ -17,12 +17,10 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo "📦 Installing dependencies..."
-                echo "PATH: ${PATH}"
                 sh '''
                     echo "Current PATH: $PATH"
-                    which npm || echo "npm not found in PATH"
-                    which node || echo "node not found in PATH"
-                    npm --version || echo "npm version check failed"
+                    node --version
+                    npm --version
                     npm ci
                 '''
             }

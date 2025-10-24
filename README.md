@@ -1,37 +1,22 @@
 # NSW Stamp Duty Calculator Test Framework
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/your-username/NSWStampDuty/actions)
-[![Test Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen)](https://github.com/your-username/NSWStampDuty/actions)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+A simple Cypress test automation framework for the NSW Service Motor Vehicle Stamp Duty Calculator with Jenkins CI/CD integration and Mochawesome reporting.
 
-A comprehensive test automation framework for the NSW Service Motor Vehicle Stamp Duty Calculator, featuring automated testing, CI/CD pipeline integration, and detailed reporting capabilities.
-
-## 🎯 Overview
-
-This project demonstrates modern test automation practices with:
+## 🎯 Features
 
 - **Cypress E2E Testing**: Automated testing of the NSW Stamp Duty Calculator
-- **CI/CD Pipeline**: Jenkins and GitHub Actions integration
-- **Comprehensive Reporting**: Mochawesome reports with screenshots and videos
-- **Artifact Management**: Automated collection and archiving of test results
-- **Traceability**: Full Git integration with commit tracking
-
-## 🏗️ Architecture
-
-```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Test Suite   │───▶│   CI/CD Pipeline │───▶│   Reports &     │
-│   (Cypress)    │    │   (Jenkins/GHA)  │    │   Artifacts     │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
-```
+- **Jenkins Pipeline**: Simple CI/CD pipeline for manual execution
+- **Mochawesome Reports**: Beautiful HTML test reports with screenshots
+- **Failure Screenshots**: Automatic screenshot capture on test failures
+- **Manual Execution**: Full control over when tests run
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
 - Node.js 20.x or higher
-- npm or yarn
-- Git
+- npm
+- Jenkins server (optional)
 
 ### Installation
 
@@ -67,23 +52,15 @@ NSWStampDuty/
 │   │   └── motor-vehicle-stamp-duty.cy.js
 │   ├── support/                # Support files
 │   │   ├── commands.js         # Custom commands
-│   │   ├── e2e.js             # Configuration
-│   │   └── pages/             # Page Object Models
+│   │   └── e2e.js             # Configuration
 │   ├── screenshots/           # Test screenshots
 │   ├── videos/                # Test videos
 │   └── reports/               # Test reports
-├── .jenkins/                  # Jenkins configuration
-│   ├── config.xml
-│   ├── plugins.txt
-│   ├── jenkins.yaml
-│   └── docker-compose.yml
-├── .github/
-│   └── workflows/
-│       └── ci-cd.yml          # GitHub Actions workflow
 ├── Jenkinsfile                # Jenkins pipeline
 ├── cypress.config.js          # Cypress configuration
 ├── package.json               # Dependencies
-└── run-tests.sh              # Test runner script
+├── run-tests.sh              # Test runner script
+└── README.md                 # This file
 ```
 
 ## 🧪 Test Suite
@@ -94,11 +71,6 @@ NSWStampDuty/
    - Complete calculation flow with $25,000 vehicle value
    - Verification of popup with calculation details
    - Screenshot capture for verification
-
-2. **Error Handling**
-   - Invalid input validation
-   - Empty field handling
-   - Error message verification
 
 ### Running Tests
 
@@ -133,57 +105,33 @@ The `cypress.config.js` file contains:
 - **Reporter**: Mochawesome with HTML and JSON output
 - **Artifacts**: Screenshots and videos on failure
 
-### Environment Variables
+## 🚀 Jenkins Pipeline
 
-```bash
-# Test environment
-NODE_ENV=test
-CYPRESS_CACHE_FOLDER=/tmp/cypress-cache
+### Setup
 
-# CI/CD environment
-JENKINS_HOME=/var/jenkins_home
-GITHUB_TOKEN=[Your GitHub Personal Access Token]
-```
+1. **Install Required Plugins**
+   - Git Plugin
+   - GitHub Plugin
+   - HTML Publisher Plugin
+   - NodeJS Plugin
+   - Pipeline Plugin
 
-## 🚀 CI/CD Pipeline
+2. **Configure Global Tools**
+   - **NodeJS**: Install version 20.x
 
-### Jenkins Pipeline
+3. **Create Pipeline Job**
+   - **New Item** → **Pipeline**
+   - **Pipeline script from SCM**
+   - **Git** repository: `https://github.com/your-username/NSWStampDgency.git`
+   - **Script Path**: `Jenkinsfile`
 
-The Jenkins pipeline includes:
+### Manual Execution
 
-- **Automated Testing**: Runs on every push/PR
-- **Artifact Collection**: Screenshots, videos, reports
-- **Report Generation**: Mochawesome HTML reports
-- **Failure Analysis**: Automated failure artifact collection
-- **Traceability**: Git commit tracking and build history
+The pipeline is configured for **manual execution only**:
 
-### GitHub Actions
-
-Alternative CI/CD using GitHub Actions:
-
-- **Matrix Testing**: Multiple browser support
-- **Artifact Upload**: Automatic artifact collection
-- **Test Reporting**: Integrated test result reporting
-- **Notifications**: Slack and GitHub notifications
-
-### Setup Instructions
-
-#### Jenkins Setup
-
-1. **Install Jenkins** with required plugins
-2. **Configure Node.js** tool (20.x)
-3. **Set up credentials** for GitHub access
-4. **Create pipeline job** using the Jenkinsfile
-5. **Configure webhooks** for automatic triggers
-
-#### GitHub Actions Setup
-
-1. **Enable Actions** in repository settings
-2. **Set up secrets** for notifications
-3. **Configure branch protection** rules
-4. **Review workflow** configuration
-
-Detailed setup instructions: [CI-CD-SETUP.md](CI-CD-SETUP.md)
+1. Go to your Jenkins job dashboard
+2. Click **"Build Now"** to run the pipeline manually
+3. View test reports in Jenkins build results
 
 ## 📊 Reporting
 
@@ -199,12 +147,10 @@ Detailed setup instructions: [CI-CD-SETUP.md](CI-CD-SETUP.md)
 - **Screenshots**: Captured on test failures
 - **Videos**: Full test execution recordings
 - **JSON Reports**: Machine-readable test results
-- **Build Info**: Metadata for traceability
 
 ### Accessing Reports
 
 - **Jenkins**: Available in build artifacts
-- **GitHub Actions**: Available in workflow runs
 - **Local**: Generated in `cypress/reports/` directory
 
 ## 🔍 Debugging
@@ -221,11 +167,6 @@ Detailed setup instructions: [CI-CD-SETUP.md](CI-CD-SETUP.md)
    - Check network connectivity
    - Verify test environment
 
-3. **Screenshot Issues**
-   - Check file permissions
-   - Verify directory structure
-   - Review Cypress configuration
-
 ### Debug Commands
 
 ```bash
@@ -239,79 +180,18 @@ npx cypress open
 npx cypress run --spec "cypress/e2e/motor-vehicle-stamp-duty.cy.js"
 ```
 
-## 📈 Performance
-
-### Optimization
-
-- **Parallel Execution**: Tests run in parallel when possible
-- **Artifact Cleanup**: Automatic cleanup of old artifacts
-- **Caching**: npm and Cypress caching for faster builds
-- **Resource Management**: Efficient resource usage
-
-### Metrics
-
-- **Build Time**: ~5-10 minutes
-- **Test Execution**: ~2-3 minutes
-- **Artifact Size**: ~50-100MB per build
-- **Success Rate**: >95%
-
-## 🤝 Contributing
-
-### Development Workflow
-
-1. **Fork** the repository
-2. **Create** a feature branch
-3. **Write** tests for new functionality
-4. **Run** tests locally
-5. **Submit** a pull request
-
-### Code Standards
-
-- **ESLint**: Code quality checks
-- **Prettier**: Code formatting
-- **Conventional Commits**: Commit message format
-- **Test Coverage**: Maintain high coverage
-
-### Pull Request Process
-
-1. **Tests must pass** in CI/CD pipeline
-2. **Code review** required
-3. **Documentation** updated if needed
-4. **Squash and merge** preferred
-
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ## 🆘 Support
 
-### Getting Help
-
-- **Documentation**: Check this README and CI-CD-SETUP.md
-- **Issues**: Create GitHub issues for bugs
-- **Discussions**: Use GitHub Discussions for questions
-- **Contact**: Reach out to the development team
-
-### Resources
-
-- [Cypress Documentation](https://docs.cypress.io/)
-- [Jenkins Documentation](https://www.jenkins.io/doc/)
-- [GitHub Actions Documentation](https://docs.github.com/en/actions)
-
-## 🏆 Portfolio Showcase
-
-This project demonstrates:
-
-- **Modern Test Automation**: Cypress E2E testing
-- **CI/CD Best Practices**: Jenkins and GitHub Actions
-- **DevOps Skills**: Pipeline automation and artifact management
-- **Quality Assurance**: Comprehensive testing and reporting
-- **Documentation**: Clear setup and usage instructions
-
-Perfect for showcasing your skills in test automation, CI/CD, and DevOps practices!
+For issues or questions:
+1. Check Jenkins build logs
+2. Review test artifacts
+3. Consult this documentation
 
 ---
 
 **Last Updated**: October 2024  
-**Version**: 1.0.0  
-**Maintainer**: Test Automation Team
+**Version**: 1.0.0
