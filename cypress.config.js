@@ -19,7 +19,11 @@ module.exports = defineConfig({
     overwrite: true,
     html: true,
     json: true,
-    timestamp: "mmddyyyy_HHMMss"
+    timestamp: "mmddyyyy_HHMMss",
+    charts: true,
+    embeddedScreenshots: true,
+    inlineAssets: true,
+    saveAllAttempts: false
   },
   env: {
     TAGS: "not @ignore"
