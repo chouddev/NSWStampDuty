@@ -48,7 +48,7 @@ pipeline {
                         npx mochawesome-merge "cypress/reports/.jsons/*.json" > cypress/reports/merged-report.json
                         
                         # Try to generate HTML report with marge, fallback to basic approach if it fails
-                        if npx marge cypress/reports/merged-report.json --reportDir cypress/reports --inline; then
+                        if npx marge cypress/reports/merged-report.json --reportDir cypress/reports --reportFilename merged-report.html then
                             echo "HTML report generated successfully with marge!"
                         else
                             echo "Marge failed, using basic report generation..."
@@ -80,7 +80,7 @@ pipeline {
                 alwaysLinkToLastBuild: true,
                 keepAll: true,
                 reportDir: 'cypress/reports',
-                reportFiles: 'mochawesome.html',
+                reportFiles: 'merged-report.html',
                 reportName: 'Cypress Test Report'
             ])
         }
