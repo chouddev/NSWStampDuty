@@ -1,8 +1,11 @@
 pipeline {
     agent any
     
+    tools {
+        nodejs 'NodeJS-20'
+    }
+    
     environment {
-        PATH = "/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin:/opt/homebrew/opt/node@20/bin:${PATH}"
         NODE_VERSION = '20'
     }
     
@@ -17,12 +20,12 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo "📦 Installing dependencies..."
+                echo "Node.js version: ${NODE_VERSION}"
                 echo "PATH: ${PATH}"
                 sh '''
                     echo "Current PATH: $PATH"
-                    which npm || echo "npm not found in PATH"
-                    which node || echo "node not found in PATH"
-                    npm --version || echo "npm version check failed"
+                    node --version
+                    npm --version
                     npm ci
                 '''
             }
