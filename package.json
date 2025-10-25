@@ -15,8 +15,9 @@
     "test:firefox": "cypress run --browser firefox",
     "test:edge": "cypress run --browser edge",
     "test:stamp-duty": "cypress run --spec 'cypress/e2e/motor-vehicle-stamp-duty.cy.js'",
-    "clean": "rm -rf cypress/videos cypress/screenshots",
-    "report": "npx cypress-mochawesome-reporter"
+    "clean": "rm -rf cypress/videos cypress/screenshots cypress/reports",
+    "report": "npx mochawesome-merge 'cypress/reports/.jsons/*.json' > cypress/reports/merged-report.json && npx marge cypress/reports/merged-report.json --reportDir cypress/reports --inline && open cypress/reports/merged-report.html",
+    "report:open": "open cypress/reports/merged-report.html"
   },
   "keywords": [
     "cypress",
