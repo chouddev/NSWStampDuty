@@ -30,37 +30,80 @@ pipeline {
             steps {
                 echo "🧪 Running Cypress tests..."
                 sh '''
-                    chmod +x run-tests.sh
-                    ./run-tests.sh stamp-duty
+                    # Create reports directory
+                    mkdir -p cypress/reports
+                    
+                    # Run Cypress tests with specific spec and JUnit reporter
+                    npx cypress run --spec "cypress/e2e/motor-vehicle-stamp-duty.cy.js" --reporter junit --reporter-options "mochaFile=cypress/reports/results.xml"
                 '''
             }
         }
         
         stage('Generate Reports') {
             steps {
-                echo "📊 Generating Mochawesome reports..."
+                echo "📊 Processing test results..."
                 sh '''
-                    echo "Checking for report files..."
-                    ls -la cypress/reports/.jsons/ || echo "No reports directory found"
+                    echo "Checking for test result files..."
+                    ls -la cypress/reports/ || echo "No reports directory found"
                     
-                    if ls cypress/reports/.jsons/mochawesome_*.json 1> /dev/null 2>&1; then
-                        echo "Found report files, generating merged report..."
-                        npx mochawesome-merge "cypress/reports/.jsons/*.json" > cypress/reports/merged-report.json
+                    # Check if JUnit XML was generated
+                    if [ -f "cypress/reports/results.xml" ]; then
+                        echo "✅ JUnit XML report found: results.xml"
+                        echo "Report size: $(wc -c < cypress/reports/results.xml) bytes"
                         
-                        # Try to generate HTML report with marge, fallback to basic approach if it fails
-                        if npx marge cypress/reports/merged-report.json --reportDir cypress/reports --reportFilename merged-report.html; then
-                            echo "HTML report generated successfully with marge!"
-                        else
-                            echo "Marge failed, using basic report generation..."
-                            # Basic HTML report generation without marge
-                            echo "<html><body><h1>Test Report</h1><p>Reports available in JSON format</p></body></html>" > cypress/reports/merged-report.html
-                        fi
-                        
-                        echo "Reports generated successfully!"
+                        # Create a simple HTML summary for Jenkins
+                        cat > cypress/reports/index.html << 'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NSW Stamp Duty Test Report</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .header { background-color: #f0f0f0; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        .success { color: #28a745; }
+        .info { background-color: #d1ecf1; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>NSW Stamp Duty Test Report</h1>
+        <p class="success">✅ Tests completed successfully!</p>
+    </div>
+    <div class="info">
+        <h3>Test Results Summary</h3>
+        <p>• JUnit XML report: <code>results.xml</code></p>
+        <p>• Screenshots: Available in <code>cypress/screenshots/</code></p>
+        <p>• Videos: Available in <code>cypress/videos/</code></p>
+        <p>• Detailed results are available in Jenkins Test Results section</p>
+    </div>
+</body>
+</html>
+EOF
+                        echo "✅ Created HTML summary report"
                     else
-                        echo "No report files found to merge"
-                        # Create a basic HTML report even if no JSON files exist
-                        echo "<html><body><h1>Test Report</h1><p>No test results found</p></body></html>" > cypress/reports/merged-report.html
+                        echo "❌ No test results found, creating basic report..."
+                        cat > cypress/reports/index.html << 'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NSW Stamp Duty Test Report</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .header { background-color: #f0f0f0; padding: 15px; border-radius: 5px; }
+        .warning { color: #856404; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>NSW Stamp Duty Test Report</h1>
+        <p class="warning">⚠️ No test results found</p>
+    </div>
+</body>
+</html>
+EOF
+                        echo "✅ Created basic HTML report"
                     fi
                 '''
             }
@@ -69,6 +112,9 @@ pipeline {
     
     post {
         always {
+            // Publish JUnit test results
+            junit 'cypress/reports/results.xml'
+            
             // Archive test artifacts
             archiveArtifacts artifacts: 'cypress/screenshots/**/*', allowEmptyArchive: true
             archiveArtifacts artifacts: 'cypress/videos/**/*', allowEmptyArchive: true
@@ -80,8 +126,8 @@ pipeline {
                 alwaysLinkToLastBuild: true,
                 keepAll: true,
                 reportDir: 'cypress/reports',
-                reportFiles: 'merged-report.html',
-                reportName: 'Cypress Test Report'
+                reportFiles: 'index.html',
+                reportName: 'NSW Stamp Duty Test Report'
             ])
         }
         
